@@ -39,7 +39,7 @@ circle {
 <script>
 
 var width = Math.max(960, innerWidth),
-    height = Math.max(500, innerHeight);
+    height = Math.max(960, innerHeight);
 
 var i = 0;
 
@@ -78,7 +78,7 @@ function particle() {
       .style("stroke", d3.hsl((i = (i + 1) % 360), 1, 0.5))
       .style("stroke-opacity", 1)
     .transition()
-      .duration(10000)
+      .duration(100000)
       .ease(Math.sqrt)
       .attr("r", 100)
       .style("stroke-opacity", 1e-6)
