@@ -1,0 +1,16 @@
+body {
+  background: #000;
+  overflow: hidden; 
+}
+
+canvas {
+  background-image: url("http://68.media.tumblr.com/tumblr_meah7lfxEK1qbpwkro1_400.gif");
+  background-repeat: no-repeat;
+  background-size: 1000px 1000px;
+  background-blend-mode: overlay;
+  background-attachment: fixed;
+  background-position: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
