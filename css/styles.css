@@ -9,7 +9,7 @@ canvas {
   background-size: 1000px 1000px;
   background-blend-mode: overlay;
   background-attachment: fixed;
-  background-position: center;
+  background-position: left;
   left: 0;
   position: absolute;
   top: 0;
@@ -17,7 +17,14 @@ canvas {
 }
 
 h1  {
-  font-family: 'Poppins', sans-serif;
   z-index: 0;
-  color: white
+  font-family: 'Poppins', sans-serif;
+  font-size: 9vh;  
+  color: white;
+  text-align: left;
+  font-weight: normal;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  
 }
