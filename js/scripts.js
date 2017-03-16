@@ -12,6 +12,8 @@ $( document ).ready(function() {
   PI,
   TWOPI;
 
+
+
 function rand( min, max ) {
   return Math.random() * ( max - min ) + min;
 }
@@ -252,9 +254,11 @@ function loop() {
   clear();
   draw();
   tick+10;
+  
 }
 
 window.addEventListener( 'resize', reset );
 
 init();
+
 });

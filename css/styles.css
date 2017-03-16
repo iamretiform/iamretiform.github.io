@@ -13,4 +13,11 @@ canvas {
   left: 0;
   position: absolute;
   top: 0;
+  z-index: -10
+}
+
+h1  {
+  font-family: 'Poppins', sans-serif;
+  z-index: 0;
+  color: white
 }
