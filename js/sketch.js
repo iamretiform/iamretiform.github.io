@@ -12,7 +12,7 @@ function windowResized() {
 }
 
 function setup() {
-  canvas = createCanvas(displayWidth, displayHeight > 1000 ? 400 : 250);
+  canvas = createCanvas(displayWidth, displayHeight);
   var wt = (windowWidth - width) / 2;
   var ht = (windowHeight - height) / 2;
   canvas.position(wt, ht);
