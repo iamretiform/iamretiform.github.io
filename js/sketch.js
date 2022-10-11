@@ -8,45 +8,48 @@ let baseFont;
 let title;
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(displayWidth * 0.8, displayWidth * 0.8);
+}
+
+let satisfyRegular;
+
+function preload() {
+  satisfyRegular = loadFont("js/Satisfy-Regular.ttf");
 }
 
 function setup() {
-  canvas = createCanvas(displayWidth, displayHeight);
+  canvas = createCanvas(displayWidth * 0.8, displayHeight * 0.8);
   var wt = (windowWidth - width) / 2;
   var ht = (windowHeight - height) / 2;
   canvas.position(wt, ht);
   background(255, 0, 200);
   for (let i = 0; i < numBalls; i++) {
-    balls[i] = new Ball(
-      random(width),
-      random(height),
-      tan(i),
-      i,
-      balls
-    );
+    balls[i] = new Ball(random(width), random(height), tan(i), i);
   }
   noStroke();
   fill(255);
-  title = new Title('Scott Plunkett');
+  title = new Title("S_P");
 }
+
+const emblaze = (balls) => balls.map((ball) => ball.changeColorBlack());
+const randomaze = (balls) => balls.map((ball) => ball.changeColorRandom());
 
 function draw() {
   background(255);
 
-  balls.forEach(ball => {
-    ball.collide();
-    ball.move();
-    ball.display();
-    if (keyCode === LEFT_ARROW) {
-      ball.changeColorBlack();
-    } else if (keyCode === RIGHT_ARROW) {
-      ball.changeColorRandom();
-    }
-  });
+  balls.map((ball) => ball.move());
+  balls.map((ball) => ball.collide(balls));
+  balls.map((ball) => ball.display());
 
   title.display();
-  title.move(0.05, 0.010);
+}
+
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    randomaze(balls);
+  } else if (keyCode === RIGHT_ARROW) {
+    emblaze(balls);
+  }
 }
 
 class Title {
@@ -62,22 +65,21 @@ class Title {
   }
 
   display() {
-    textFont('Georgia');
+    textFont(satisfyRegular);
     textSize(48);
-    textAlign(CENTER, CENTER)
+    textAlign(CENTER, CENTER);
     text(this.text, this.x, this.y);
   }
 }
 
 class Ball {
-  constructor(xin, yin, din, idin, oin) {
+  constructor(xin, yin, din, idin) {
     this.x = xin;
     this.y = yin;
     this.vx = 0;
     this.vy = 0;
     this.diameter = din;
     this.id = idin;
-    this.others = oin;
     this.color = [random(255), random(100), random(233)];
   }
 
@@ -93,31 +95,16 @@ class Ball {
     this.changeColor(0, 0, 0);
   }
 
-
-  collide() {
-    for (let i = this.id + 1; i < numBalls; i++) {
-      // console.log(others[i]);
-      let dx = this.others[i].x - this.x;
-      let dy = this.others[i].y - this.y;
-      let distance = sqrt(dx * dx + dy * dy);
-      let minDist = sqrt(this.others[i].diameter + this.diameter);
-      //   console.log(distance);
-      //console.log(minDist);
-      if (distance < minDist) {
-        //console.log("2");
-        let angle = atan2(dy, dx);
-        let targetX = this.x + cos(angle) * minDist;
-        let targetY = this.y + sin(angle) * minDist;
-        let ax = (targetX - this.others[i].x) * spring;
-        let ay = (targetY - this.others[i].y) * spring;
-        this.vx -= ax;
-        this.vy -= ay;
-        this.others[i].vx += ax;
-        this.others[i].vy += ay;
-        this.diameter = this.diameter - sqrt(this.others[i].diameter / 2);
-        this.others[i].diameter = this.others[i].diameter - this.diameter;
+  collide(balls) {
+    balls.map((ball) => {
+      let dx = this.x - ball.x;
+      let dy = this.y - ball.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const colliding = distance < this.diameter / 2 + ball.diameter / 2;
+      if (colliding) {
+        this.diameter = this.diameter - sqrt(ball.diameter / 2);
       }
-    }
+    });
   }
 
   move() {
