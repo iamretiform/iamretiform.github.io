@@ -1,7 +1,7 @@
 let canvas;
 let numBalls = 888;
-let spring = 0.088;
-let gravity = -0.00005;
+let spring = 0.188;
+let gravity = -0.0008;
 let friction = -0.8;
 let balls = [];
 let baseFont;
